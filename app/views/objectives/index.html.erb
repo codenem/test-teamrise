@@ -1,0 +1,5 @@
+<% Objective.roots.find_each do |root_objective| %>
+  <% Objective.each_with_level(root_objective.self_and_descendants) do |objective, level| %>
+    <%= render objective, level: level %>
+  <% end %>
+<% end %>

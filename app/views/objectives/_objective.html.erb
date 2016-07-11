@@ -1,0 +1,8 @@
+<div style="margin-left: <%= level * 50 %>px;">
+  <div style="display: inline-block; border: 1px solid;">
+    <p><%= objective.title %></p>
+    <p>level <%= level %></p>
+    <p><%= objective.progress_value.to_s %><%= objective.progress_unit %></p>
+    <p><%= objective.progress_target.to_s %><%= objective.progress_unit %></p>
+  </div>
+</div>
