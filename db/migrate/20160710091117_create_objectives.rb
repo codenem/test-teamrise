@@ -6,9 +6,13 @@ class CreateObjectives < ActiveRecord::Migration
       t.integer :progress_target, null: :false
       t.integer :progress_value, null: :false
       t.string :progress_unit
+      t.timestamps
+      # Nested set related columns
       t.references :owner, index: true
       t.references :parent, index: true
-      t.timestamps
+      t.integer :level, default: 0, index: true
+      t.integer :lft, null: false, index: true
+      t.integer :rgt, null: false, index: true
     end
 
     add_foreign_key :objectives, :users, column: :owner_id

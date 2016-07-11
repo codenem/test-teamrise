@@ -17,17 +17,22 @@ ActiveRecord::Schema.define(version: 20160710091117) do
   enable_extension "plpgsql"
 
   create_table "objectives", force: :cascade do |t|
-    t.string   "title",           null: false
+    t.string   "title",                       null: false
     t.integer  "progress_start"
     t.integer  "progress_target"
     t.integer  "progress_value"
     t.string   "progress_unit"
-    t.integer  "owner_id"
-    t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "owner_id"
+    t.integer  "parent_id"
+    t.integer  "level",           default: 0
+    t.integer  "lft",                         null: false
+    t.integer  "rgt",                         null: false
   end
 
+  add_index "objectives", ["level"], name: "index_objectives_on_level", using: :btree
+  add_index "objectives", ["lft"], name: "index_objectives_on_lft", using: :btree
   add_index "objectives", ["owner_id"], name: "index_objectives_on_owner_id", using: :btree
   add_index "objectives", ["parent_id"], name: "index_objectives_on_parent_id", using: :btree
   add_index "objectives", ["progress_value", "progress_target"], name: "index_objectives_on_progress_value_and_progress_target", using: :btree

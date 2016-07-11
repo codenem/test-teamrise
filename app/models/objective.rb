@@ -1,5 +1,5 @@
 class Objective < ActiveRecord::Base
+  # Store objectives as a nested set in the DB
+  acts_as_nested_set depth_column: :level, touch: true
   belongs_to :owner, class_name: User
-  belongs_to :parent, class_name: Objective
-  has_many :children, class_name: Objective, foreign_key: :parent_id
 end
