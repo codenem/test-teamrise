@@ -1,5 +1,15 @@
-<% Objective.roots.find_each do |root_objective| %>
-  <% Objective.each_with_level(root_objective.self_and_descendants) do |objective, level| %>
-    <%= render objective, level: level %>
+<%= form_tag objectives_path, method: :get, enforce_utf8: false, class: 'search-bar' do %>
+  <%= label_tag :team_id, 'Team' %>
+  <%= select_tag :team_id, options_for_select(Team.pluck(:name, :id), params[:team_id]), include_blank: true %>
+
+  <%= label_tag :level %>
+  <%= number_field_tag :level, params[:level], min: 0 %>
+
+  <%= submit_tag 'Submit', name: nil %>
+<% end %>
+
+<% @root_objectives.find_each do |root_objective| %>
+  <% root_objective.self_and_descendants.of_level(level).each do |objective| %>
+    <%= render objective, level: objective.level %>
   <% end %>
 <% end %>
