@@ -4,6 +4,18 @@ class Objective < ActiveRecord::Base
   belongs_to :owner, class_name: User
 
   scope :of_level, ->(level = nil) { level.blank? ? all : where(Objective.arel_table[:level].eq(level)) }
+  scope :done, ->(state = nil) {
+    if state.nil?
+      all
+    else
+      objectives = Objective.arel_table
+      if state
+        where(objectives[:progress_value].eq(objectives[:progress_target]))
+      else
+        where(objectives[:progress_value].lt(objectives[:progress_target]))
+      end
+    end
+  }
 
 
   def children_progress

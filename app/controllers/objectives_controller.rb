@@ -3,14 +3,15 @@ class ObjectivesController < ApplicationController
 
   def index
     render locals: {
-      level: search_params[:level]
+      level: search_params[:level],
+      done: search_params[:done] == '' ? nil : search_params[:done] == 'true'
     }
   end
 
   private
 
   def search_params
-    params.permit(:team_id, :level)
+    params.permit(:team_id, :level, :done)
   end
 
   def root_objectives
