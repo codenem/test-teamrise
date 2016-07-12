@@ -3,16 +3,16 @@
   <%= select_tag :team_id, options_for_select(Team.pluck(:name, :id), params[:team_id]), include_blank: true %>
 
   <%= label_tag :level %>
-  <%= number_field_tag :level, level, min: 0 %>
+  <%= number_field_tag :level, filters[:level], min: 0 %>
 
-  <%= label_tag :done %>
-  <%= select_tag :done, options_for_select([['Done', true], ['Undone', false]], done), include_blank: true %>
+  <%= label_tag :done, 'Progress' %>
+  <%= select_tag :done, options_for_select([['Done', true], ['Undone', false]], filters[:done]), include_blank: true %>
 
   <%= submit_tag 'Submit', name: nil %>
 <% end %>
 
 <% @root_objectives.find_each do |root_objective| %>
-  <% root_objective.self_and_descendants.done(done).of_level(level).each do |objective| %>
+  <% root_objective.self_and_descendants.filter(filters).each do |objective| %>
     <%= render objective, level: objective.level %>
   <% end %>
 <% end %>
