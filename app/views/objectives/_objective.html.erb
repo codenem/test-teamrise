@@ -1,17 +1,19 @@
-<div class="objective" style="margin-left: <%= 50 * level %>px;">
-  <p class="objective__title"><%= objective.title %></p>
-  <p>level <%= level %></p>
-  <p>
-    progress:
-    <%= objective.progress_value %>
-    /
-    <%= objective.progress_target %><%= objective.progress_unit %>
-  </p>
-  <% unless objective.leaf? %>
+<% cache [objective] do %>
+  <div class="objective" style="margin-left: <%= 50 * objective.level %>px">
+    <p class="objective__title"><%= objective.title %></p>
+    <p>level <%= objective.level %></p>
     <p>
-      children progress:
-      <%= (objective.children_progress * 100).to_i %>
-      %
+      progress:
+      <%= objective.progress_value %>
+      /
+      <%= objective.progress_target %><%= objective.progress_unit %>
     </p>
-  <% end %>
-</div>
+    <% unless objective.leaf? %>
+      <p>
+        children progress:
+        <%= (objective.children_progress * 100).to_i %>
+        %
+      </p>
+    <% end %>
+  </div>
+<% end %>

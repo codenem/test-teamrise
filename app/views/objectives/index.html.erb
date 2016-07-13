@@ -12,7 +12,5 @@
 <% end %>
 
 <% @root_objectives.find_each do |root_objective| %>
-  <% root_objective.self_and_descendants.filter(filters).each do |objective| %>
-    <%= render objective, level: objective.level %>
-  <% end %>
+  <%= render root_objective.self_and_descendants.filter(filters), cached: true %>
 <% end %>
